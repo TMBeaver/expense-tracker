@@ -7,23 +7,123 @@
 </head>
 <body>
     <h1>Expense Tracker</h1>
-    <table border="1">
+
+    <!--============ The expense form itself==============-->
+    <form id="expense-form" action="/add_expense" method="POST">
+        <input type="hidden" name="expense_id" id="expenseId">
+        <label>Name:</label>
+        <input type="text" name="name" id="name" required>
+    
+        <label>Category:</label>
+        <input type="text" name="category" id="category" required>
+    
+        <label>Amount:</label>
+        <input type="number" name="amount" id="amount" required>
+    
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required>
+    
+        <button type="submit" id="submit-btn">Add Expense</button>
+    </form>
+    
+
+    <!-- Expense Table -->
+    <table>
         <tr>
             <th>ID</th>
             <th>Name</th>
             <th>Category</th>
             <th>Amount</th>
             <th>Date</th>
+            <th>Action</th>
         </tr>
         {% for expense in expenses %}
         <tr>
             <td>{{ expense.id }}</td>
             <td>{{ expense.name }}</td>
             <td>{{ expense.category }}</td>
-            <td>{{ expense.amount }}</td>
+            <td>${{ expense.amount }}</td>
             <td>{{ expense.date }}</td>
+            <td>
+                <button onclick="deleteExpense('{{ expense.id }}')">Remove</button>
+                <button onclick="editExpense('{{ expense.id }}', '{{ expense.name }}', '{{ expense.category }}', '{{ expense.amount }}', '{{ expense.date }}')">
+                    Edit </button>
+            </td>
+
+            
         </tr>
         {% endfor %}
     </table>
+
+    <!--Deletion script-->
+    <script>
+        function deleteExpense(expenseId) {
+            fetch(`/delete_expense/${expenseId}`, {
+                method: 'POST',
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();  // Reload the page after deletion
+                } else {
+                    alert("Failed to delete expense: " + data.error);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+    
+    <!--EDIT script for editing expenses that are written alrd-->
+
+<script>
+
+function editExpense(id, name, category, amount, date) {
+
+    
+    document.getElementById("expenseId").value = id;
+    document.getElementById("name").value = name;
+    document.getElementById("category").value = category;
+    document.getElementById("amount").value = amount;
+    document.getElementById("date").value = date.split(" ")[0]; // Remove time part if present
+
+    document.getElementById("submit-btn").innerText = "Update Expense";
+    document.getElementById("expense-form").action = "/update_expense";
+}
+
+</script>
+
 </body>
 </html>
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 10px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    form {
+        margin-bottom: 20px;
+    }
+    input, button {
+        display: block;
+        margin: 5px 0;
+        padding: 8px;
+    }
+    button {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #218838;
+    }
+</style>
