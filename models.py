@@ -2,15 +2,6 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy() #db using flask'a
 
-CATEGORIES = [
-    ('food', 'Food'),
-    ('transport', 'Transport'),
-    ('entertainment', 'Entertainment'),
-    ('rent', 'Rent'),
-    ('utilities', 'Utilities'),
-    ('other', 'Other')
-]
-
 class Expense(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
