@@ -7,6 +7,7 @@
 </head>
 <body>
     <h1>Expense Tracker</h1>
+    <a href="/logout">Logout</a>
 
     <!--============ The expense form itself==============-->
     <form id="expense-form" action="/add_expense" method="POST">
@@ -96,34 +97,167 @@ function editExpense(id, name, category, amount, date) {
 </html>
 
 <style>
+    /* Consistent Base Styles */
+    body {
+        font-family: 'Segoe UI', Tahoma, Roboto, Verdana, sans-serif;
+        background-color: #f5f9ff;
+        color: #333;
+        margin: 0;
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Header Section */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    h1 {
+        color: #4361ee;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .logout-btn {
+        background-color: #f72585;
+        color: white;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: 6px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: background 0.3s;
+    }
+
+    .logout-btn:hover {
+        background-color: #d3166d;
+    }
+
+    /* Expense Form */
+    #expense-form {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    #expense-form label {
+        display: block;
+        font-weight: 500;
+        color: #555;
+        margin-bottom: 0.5rem;
+    }
+
+    #expense-form input {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        font-size: 16px;
+        transition: border 0.3s;
+    }
+
+    #expense-form input:focus {
+        border-color: #4361ee;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+    }
+
+    #submit-btn {
+        background-color: #4cc9f0;
+        color: white;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s;
+        width: 100%;
+    }
+
+    #submit-btn:hover {
+        background-color: #3aa8d8;
+    }
+
+    /* Expense Table */
     table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 20px;
+        margin-top: 2rem;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
+
     th, td {
-        border: 1px solid black;
-        padding: 10px;
+        padding: 1rem;
         text-align: left;
+        border-bottom: 1px solid #eee;
     }
+
     th {
-        background-color: #f2f2f2;
+        background-color: #f8f9fa;
+        color: #555;
+        font-weight: 600;
     }
-    form {
-        margin-bottom: 20px;
+
+    tr:hover {
+        background-color: #f8f9fa;
     }
-    input, button {
-        display: block;
-        margin: 5px 0;
-        padding: 8px;
-    }
-    button {
-        background-color: #28a745;
-        color: white;
-        border: none;
+
+    /* Action Buttons */
+    .action-btn {
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
         cursor: pointer;
+        transition: all 0.3s;
+        border: none;
+        margin-right: 0.5rem;
     }
-    button:hover {
-        background-color: #218838;
+
+    .delete-btn {
+        background-color: #ff6b6b;
+        color: white;
+    }
+
+    .delete-btn:hover {
+        background-color: #f03e3e;
+    }
+
+    .edit-btn {
+        background-color: #51cf66;
+        color: white;
+    }
+
+    .edit-btn:hover {
+        background-color: #40c057;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        body {
+            padding: 1rem;
+        }
+        
+        .header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        table {
+            display: block;
+            overflow-x: auto;
+        }
     }
 </style>
