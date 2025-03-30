@@ -74,13 +74,13 @@ def add_expense():
 
     name = request.form['name']
     category = request.form['category']
-    amount = request.form['amount']
+    amount = request.form['amount'].replace(',', '.')  # Convert comma to period
     date = request.form['date']
 
     new_expense = Expense(
         name=name,
         category=category,
-        amount=float(amount),
+        amount=float(amount),  # Convert to float
         date=datetime.strptime(date, '%Y-%m-%d'),
         user_id=session['user_id']
     )
@@ -88,6 +88,7 @@ def add_expense():
     db.session.add(new_expense)
     db.session.commit()
     return redirect(url_for('index'))
+
 
 #========UPDATE EXPENSE==(after edit)============
 
@@ -98,14 +99,14 @@ def update_expense():
     expense_id = request.form['expense_id']
     name = request.form['name']
     category = request.form['category']
-    amount = request.form['amount']
+    amount = request.form['amount'].replace(',', '.')  # Convert comma to period
     date = request.form['date']
 
     expense = Expense.query.get(expense_id)
     if expense:
         expense.name = name
         expense.category = category
-        expense.amount = float(amount)
+        expense.amount = float(amount)  # Convert to float
         expense.date = datetime.strptime(date, '%Y-%m-%d')
 
         db.session.commit()
@@ -113,7 +114,8 @@ def update_expense():
     return redirect(url_for('index'))
 
 
-#========ADD EXPENSE==============
+
+#========DELTE EXPENSE==============
 
 @app.route('/delete_expense/<int:expense_id>', methods=['POST'])
 def delete_expense(expense_id):
@@ -132,3 +134,5 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
+
+
